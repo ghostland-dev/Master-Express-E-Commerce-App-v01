@@ -33,7 +33,11 @@ router.get('/commandes/liste', handleErrors(async (req: any, res: { json: (arg0:
 router.get('/commandes/:id', validateIdParam, handleErrors(async (req: { params: { id: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { erreur: string; }): void; new(): any; }; }; json: (arg0: { id: number; date: Date; utilisateurId: number; }) => void; }) => {
   const commande = await prisma.commande.findUnique({
     where: {
-      id: req.params.id,
+      id: parseInt(req.params.id),
+    },
+    include: {
+      produits: true, // inclut les produits liés à la commande
+      utilisateur: true,
     },
   });
   if (!commande) {
@@ -53,7 +57,7 @@ router.post('/commandes', handleErrors(async (req: { body: any; }, res: { json: 
 router.put('/commandes/:id', validateIdParam, handleErrors(async (req: { params: { id: any; }; body: any; }, res: { json: (arg0: { id: number; date: Date; utilisateurId: number; }) => void; }) => {
   const commandeModifiee = await prisma.commande.update({
     where: {
-      id: req.params.id,
+      id: parseInt(req.params.id),
     },
     data: req.body,
   });

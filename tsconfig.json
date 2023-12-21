@@ -10,6 +10,8 @@
     "checkJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "strict": true,
     "skipLibCheck": true,
     "types": ["node", "express", "./src/custom.d.ts"]

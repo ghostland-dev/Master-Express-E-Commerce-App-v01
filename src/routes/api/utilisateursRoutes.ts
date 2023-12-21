@@ -42,6 +42,10 @@ router.get('/utilisateurs/:id', validateIdParam, handleErrors(async (req: { para
     where: {
       id: parseInt(req.params.id),
     },
+    include: {
+      commandes: true,
+      _count: true,
+    },
   });
   if (!utilisateur) {
     res.status(404).json({ erreur: 'Utilisateur non trouvé' });
@@ -110,6 +114,10 @@ router.post('/utilisateurs', handleErrors(async (req: { body: any; }, res: { jso
     const utilisateurModifie = await prisma.utilisateur.update({
       where: {
         id: req.params.id,
+      },
+      include:{
+        commandes: true,
+        _count: true,
       },
       data,
     });

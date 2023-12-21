@@ -33,7 +33,7 @@ model Utilisateur {
 model Commande {
   id            Int               @id @default(autoincrement())
   date          DateTime          @default(now())
-  utilisateur   Utilisateur       @relation(fields: [utilisateurId], references: [id])
+  utilisateur   Utilisateur       @relation(fields: [utilisateurId], references: [id],  onDelete: Cascade, onUpdate: Cascade)
   utilisateurId Int
   produits      ProduitCommande[]
 }
@@ -41,8 +41,8 @@ model Commande {
 model ProduitCommande {
   id         Int      @id @default(autoincrement())
   quantite   Int
-  produit    Produit  @relation(fields: [produitId], references: [id])
+  produit    Produit  @relation(fields: [produitId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   produitId  Int
-  commande   Commande @relation(fields: [commandeId], references: [id])
+  commande   Commande @relation(fields: [commandeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   commandeId Int
 }
