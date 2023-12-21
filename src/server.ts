@@ -1,6 +1,6 @@
 // src/server.ts
 import app from './index';
-import { PORT } from './utils/constants';
+import { HOST, PORT } from './utils/constants';
 
 
 app.listen(PORT, () => {

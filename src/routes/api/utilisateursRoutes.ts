@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import prisma from '../../db/config';
 import { Prisma } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { authenticateJwt } from '../../middlewares/authMiddleware';
 const router = express.Router();
 
 // Middleware pour gérer les erreurs
@@ -32,7 +33,7 @@ const validateIdParam = (req: Request, res: Response, next: NextFunction) => {
     }
   };
 
-router.get('/utilisateurs/liste', handleErrors(async (req: any, res: { json: (arg0: { id: number; nom: string; prenom: string; email: string; motDePasse: string; role: string; }[]) => void; }) => {
+router.get('/utilisateurs/liste',authenticateJwt, handleErrors(async (req: any, res: { json: (arg0: { id: number; nom: string; prenom: string; email: string; motDePasse: string; role: string; }[]) => void; }) => {
   const utilisateurs = await prisma.utilisateur.findMany();
   res.json(utilisateurs);
 }));
@@ -54,7 +55,7 @@ router.get('/utilisateurs/:id', validateIdParam, handleErrors(async (req: { para
   }
 }));
 
-router.post('/utilisateurs', handleErrors(async (req: { body: any; }, res: { json: (arg0: { id: number; nom: string; prenom: string; email: string; motDePasse: string; role: string; }) => void; }) => {
+router.post('/utilisateurs', authenticateJwt, handleErrors(async (req: { body: any; }, res: { json: (arg0: { id: number; nom: string; prenom: string; email: string; motDePasse: string; role: string; }) => void; }) => {
     const { nom, prenom, email, motDePasse, role } = req.body;
   
     // Hash the password before storing it
@@ -125,7 +126,7 @@ router.post('/utilisateurs', handleErrors(async (req: { body: any; }, res: { jso
     res.json(utilisateurModifie);
   }));
 
-router.delete('/utilisateurs/:id', validateIdParam, handleErrors(async (req: { params: { id: any; }; }, res: { json: (arg0: { id: number; nom: string; prenom: string; email: string; motDePasse: string; role: string; }) => void; }) => {
+router.delete('/utilisateurs/:id',authenticateJwt, validateIdParam, handleErrors(async (req: { params: { id: any; }; }, res: { json: (arg0: { id: number; nom: string; prenom: string; email: string; motDePasse: string; role: string; }) => void; }) => {
   const utilisateurSupprime = await prisma.utilisateur.delete({
     where: {
       id: req.params.id,

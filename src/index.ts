@@ -7,7 +7,7 @@ import produitsRoutes from './routes/api/produitsRoutes';
 import baseRoutes from './routes/web/baseRoutes';
 import authRoutes from './routes/api/authRoutes';
 import * as dotenv from 'dotenv';
-import { authenticateJwt } from './middlewares/authMiddleware';
+import { authenticateJwt, checkRoles } from './middlewares/authMiddleware';
 import path from 'path';
 import 'twig';
 import rateLimit from 'express-rate-limit';
@@ -46,7 +46,7 @@ watcher.on('all', (event, filePath) => {
 // Routes
 // app.use('/api/v1', authenticateJwt);
 app.use(handleErrors);
-app.use('/', baseRoutes);
+app.use('/',baseRoutes);
 app.use('/api/v1', commandesRoutes);
 app.use('/api/v1', utilisateursRoutes);
 app.use('/api/v1', produitsRoutes);

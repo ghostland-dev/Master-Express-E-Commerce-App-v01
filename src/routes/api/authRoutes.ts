@@ -6,7 +6,7 @@ import prisma from '../../db/config';
 
 const router = express.Router();
 
-router.post('/register', async (req: Request, res: Response) => {
+router.post('/inscription', async (req: Request, res: Response) => {
   const { nom, prenom, email, motDePasse, role } = req.body;
 
   const hashedPassword = await bcrypt.hash(motDePasse, 10);
@@ -28,7 +28,7 @@ router.post('/register', async (req: Request, res: Response) => {
   res.json({ accessToken, refreshToken });
 });
 
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/connexion', async (req: Request, res: Response) => {
   const { email, motDePasse } = req.body;
 
   const utilsiateur = await prisma.utilisateur.findUnique({
@@ -47,7 +47,7 @@ router.post('/login', async (req: Request, res: Response) => {
     data: { refreshToken },
   });
 
-  res.json({ accessToken, refreshToken });
+  res.json({ accesstoken: "Bearer "+accessToken, refreshToken:"Bearer "+refreshToken });
 });
 
 export default router;

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+      <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="min-screen-h min-w-screen">
+    <header class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold">Express <p class="text-emerald-500"> E-Commerce</p></a>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="/" class="hover:text-gray-300"><i class="fa fa-home"></i> Accueil</a></li>
+                    <li><a href="/produits" class="hover:text-gray-300"><i class="fa fa-shopping-bag"></i> Produits</a></li>
+                    <li><a href="/panier" class="hover:text-gray-300"><i class="fa fa-shopping-cart"></i> Panier</a></li>
+                 </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container mx-auto">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

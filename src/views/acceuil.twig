@@ -1,13 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'layout.twig' %}
 
-<h1>Document</h1>
-    djde
-</body>
-</html>
+{% block content %}
+    <h1 class="text-4xl font-bold my-8">Bienvenue sur notre boutique en ligne</h1>
+
+    <div class="grid grid-cols-3 gap-4">
+        {% for produit in produits.reverse() %}
+            <div class="border p-4">
+                <img src="{{ produit.image }}" alt="{{ produit.nom }}" class="mb-4">
+                <h2 class="text-xl font-bold">{{ produit.bom }}</h2>
+                <p class="text-gray-700">{{ produit.description }}</p>
+                <p class="text-red-500 font-bold mt-2">{{ produit.prix }} €</p>
+                <button class="bg-blue-500 text-white px-4 py-2 mt-4">Ajouter au panier</button>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

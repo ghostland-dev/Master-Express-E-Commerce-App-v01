@@ -9,5 +9,5 @@ export const handleErrors = (
   console.error(err.stack);
 
   // Votre code métier pour gérer les erreurs
-  res.status(500).json({ erreur: 'Erreur interne du serveur' });
+  res.json({ erreur: 'Erreur interne du serveur' });
 };

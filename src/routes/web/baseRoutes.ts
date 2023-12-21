@@ -27,7 +27,8 @@ const validateIdParam = (req: Request, res: Response, next: any) => {
 };
  
 rotuer.get('/', handleErrors(async (req: any, res:any ) => {
-  res.render('acceuil');
+    const produits = await prisma.produit.findMany();
+  res.render('acceuil',{produits});
 }));
 rotuer.get('/creer', handleErrors(async (req: any, res:any ) => {
   res.render('pages/produits/creer');

@@ -1,9 +1,6 @@
 import expressJwt, { expressjwt } from 'express-jwt';
 import { Request, RequestHandler } from 'express';
-import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../utils/constants';
- 
-
  
 export const authenticateJwt: RequestHandler = expressjwt({
   secret: SECRET_KEY,
@@ -20,3 +17,7 @@ export const checkRoles = (roles: string[]): RequestHandler => (req, res, next) 
     res.json({ codeStatus:403, message: 'Unauthorized' });
   }
 };
+
+
+
+ 
