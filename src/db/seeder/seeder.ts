@@ -23,9 +23,9 @@ const seedData = [
 ];
 
 const seedDatabase = async () => {
-  for (const userData of seedData) {
+  for (const utilsiateurData of seedData) {
     await prisma.utilisateur.create({
-      data: userData,
+      data: utilsiateurData,
     });
   }
 };

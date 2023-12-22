@@ -45,7 +45,7 @@ watcher.on('all', (event, filePath) => {
 
 // Routes
 // app.use('/api/v1', authenticateJwt);
-app.use(handleErrors);
+// app.use(handleErrors);
 app.use('/',baseRoutes);
 app.use('/api/v1', commandesRoutes);
 app.use('/api/v1', utilisateursRoutes);

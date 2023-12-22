@@ -4,7 +4,7 @@
     "module": "commonjs",
     "rootDir": "./src",
     "allowUmdGlobalAccess": true,
-    "outDir": "./build",
+    "outDir": "./build/src",
     "moduleResolution": "node",
     "allowJs": true,
     "checkJs": true,

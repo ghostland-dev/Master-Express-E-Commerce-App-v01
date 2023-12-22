@@ -10,18 +10,17 @@ const handleErrors = (fn: any) => async (req: Request, res: Response) => {
     await fn(req, res);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ erreur: 'Erreur interne du serveur' });
+    res.status(400).json({ erreur: 'une est errror est servenue' });
   }
 };
 
-// Middleware pour valider les paramètres d'ID
 
 const validateIdParam = (req: Request, res: Response, next: any) => {
   const id = parseInt(req.params.id, 10);
   if (isNaN(id)) {
     res.status(400).json({ erreur: 'ID invalide' });
   } else {
-    req.params.id = id.toString(); // Met à jour le paramètre d'ID pour être un nombre
+    req.params.id = id.toString();  
     next();
   }
 };

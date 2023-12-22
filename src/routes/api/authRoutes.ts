@@ -7,25 +7,50 @@ import prisma from '../../db/config';
 const router = express.Router();
 
 router.post('/inscription', async (req: Request, res: Response) => {
-  const { nom, prenom, email, motDePasse, role } = req.body;
-
+  const { nom, prenom, email, motDePasse } = req.body;
   const hashedPassword = await bcrypt.hash(motDePasse, 10);
-  const refreshToken = await generateRefreshToken();
+try {
+  
+  if (!nom || !prenom || !email || !motDePasse) {
+    return res.status(400).json({
+      codeStatus: 400,
+      message: 'veuillez remplir tous les champs',
+    });
+  }
 
-  const newutilsiateur = await prisma.utilisateur.create({
+
+  const utilisateurExist = await prisma.utilisateur.findUnique({
+    where: {
+      email,
+    },
+  });
+  if (utilisateurExist) {
+    return res.status(400).json({
+      codeStatus: 400,
+      message: 'veuillez réessayer avec un autre email',
+    });
+  }
+  
+
+  const nouveauUtilisateur = await prisma.utilisateur.create({
     data: {
       nom,
       prenom,
       email,
       motDePasse: hashedPassword,
-      role,
-      refreshToken,
+
     },
   });
 
-  const accessToken = generateAccessToken(newutilsiateur.id.toString(), newutilsiateur.role);
 
-  res.json({ accessToken, refreshToken });
+
+  res.json({ nouveauUtilisateur,  message: 'Inscription réussie' });
+} catch (error) {
+  res.status(500).json({
+    codeStatus: 500,
+    message: "une erreur est survenue : "+error,
+  });  
+}
 });
 
 router.post('/connexion', async (req: Request, res: Response) => {
@@ -47,7 +72,7 @@ router.post('/connexion', async (req: Request, res: Response) => {
     data: { refreshToken },
   });
 
-  res.json({ accesstoken: "Bearer "+accessToken, refreshToken:"Bearer "+refreshToken });
+  res.json({ accesstoken: "Bearer " + accessToken, refreshToken: "Bearer " + refreshToken });
 });
 
 export default router;

@@ -9,7 +9,7 @@ export const authenticateJwt: RequestHandler = expressjwt({
 });
 
 export const checkRoles = (roles: string[]): RequestHandler => (req, res, next) => {
-  const utilisateurRoles = (req.user as { roles: string }).roles.split(',');
+  const utilisateurRoles = (req.utilsiateur as { roles: string }).roles.split(',');
 
   if (roles.some((role) => utilisateurRoles.includes(role))) {
     next();
@@ -17,7 +17,5 @@ export const checkRoles = (roles: string[]): RequestHandler => (req, res, next) 
     res.json({ codeStatus:403, message: 'Unauthorized' });
   }
 };
-
-
 
  

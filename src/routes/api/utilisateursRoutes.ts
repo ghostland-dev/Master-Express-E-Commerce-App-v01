@@ -55,7 +55,7 @@ router.get('/utilisateurs/:id', validateIdParam, handleErrors(async (req: { para
   }
 }));
 
-router.post('/utilisateurs', authenticateJwt, handleErrors(async (req: { body: any; }, res: { json: (arg0: { id: number; nom: string; prenom: string; email: string; motDePasse: string; role: string; }) => void; }) => {
+router.post('/utilisateurs', handleErrors(async (req: { body: any; }, res: { json: (arg0: { id: number; nom: string; prenom: string; email: string; motDePasse: string; role: string; }) => void; }) => {
     const { nom, prenom, email, motDePasse, role } = req.body;
   
     // Hash the password before storing it
