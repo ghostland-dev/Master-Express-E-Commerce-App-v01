@@ -24,7 +24,7 @@
     "@types/passport-jwt": "^3.0.13",
     "@types/passport-local": "^1.0.38",
     "@types/twig": "^1.12.16",
-    "express": "^4.18.2",
+    "express": "^4.21.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
