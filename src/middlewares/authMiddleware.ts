@@ -1,21 +1,14 @@
-import expressJwt, { expressjwt } from 'express-jwt';
-import { Request, RequestHandler } from 'express';
-import { SECRET_KEY } from '../utils/constants';
- 
-export const authenticateJwt: RequestHandler = expressjwt({
-  secret: SECRET_KEY,
-  algorithms: ['HS256'],
-  getToken: (req: Request) => req.headers.authorization?.split(' ')[1],
-});
+// auth-middleware.ts
+import { Request, Response, NextFunction } from 'express';
 
-export const checkRoles = (roles: string[]): RequestHandler => (req, res, next) => {
-  const utilisateurRoles = (req.utilsiateur as { roles: string }).roles.split(',');
+export const authorize = (roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user as { role: string };
 
-  if (roles.some((role) => utilisateurRoles.includes(role))) {
-    next();
-  } else {
-    res.json({ codeStatus:403, message: 'Unauthorized' });
-  }
+    if (user && roles.includes(user.role)) {
+      next();
+    } else {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+  };
 };
-
- 

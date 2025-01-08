@@ -7,13 +7,13 @@ import produitsRoutes from './routes/api/produitsRoutes';
 import baseRoutes from './routes/web/baseRoutes';
 import authRoutes from './routes/api/authRoutes';
 import * as dotenv from 'dotenv';
-import { authenticateJwt, checkRoles } from './middlewares/authMiddleware';
 import path from 'path';
 import 'twig';
 import rateLimit from 'express-rate-limit';
  import * as chokidar from 'chokidar';
 import Twig from 'twig';
-import { handleErrors } from './middlewares/exceptionMiddlware';
+import passport from 'passport';
+ 
 dotenv.config();
 
 // declaration des variables
@@ -29,6 +29,7 @@ const limiter = rateLimit({
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(passport.initialize());
 app.use(express.urlencoded({ extended: false }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.set('views', viewsDirectory);
@@ -46,10 +47,11 @@ watcher.on('all', (event, filePath) => {
 // Routes
 // app.use('/api/v1', authenticateJwt);
 // app.use(handleErrors);
+
+app.use('/api/v1/auth', authRoutes);
 app.use('/',baseRoutes);
-app.use('/api/v1', commandesRoutes);
+app.use('/api/v1' ,commandesRoutes);
 app.use('/api/v1', utilisateursRoutes);
 app.use('/api/v1', produitsRoutes);
-app.use('/api/v1/auth', authRoutes);
 
 export default app;
